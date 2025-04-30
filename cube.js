@@ -1,7 +1,7 @@
 module.exports = {
   queryRewrite: (query, { securityContext }) => {
     // List of cubes you want to filter by organizationId
-    const cubesToFilter = ["kb_threads"];
+    const cubesToFilter = ["kb_threads", "kb_messages"];
 
     // Helper function to extract cube names from query
     const getCubesFromQuery = (query) => {
@@ -30,10 +30,6 @@ module.exports = {
           member: `${cubesInQuery[0]}.organizationid`, // assumes field is named organizationId in each cube
           operator: "equals",
           values: [organizationId],
-        },
-        {
-          member: `${cubesInQuery[0]}.deletedat`,
-          operator: "notSet",
         },
       ];
     }
