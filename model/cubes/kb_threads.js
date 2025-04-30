@@ -6,69 +6,41 @@ cube(`kb_threads`, {
     id: {
       sql: `id`,
       type: `string`,
-      primary_key: true
+      primary_key: true,
     },
     organizationid: {
       sql: `${CUBE}."organizationId"`,
-      type: `string`
-    },
-    data: {
-      sql: `data`,
-      type: `string`
-    },
-    type: {
-      sql: `type`,
-      type: `string`
-    },
-    accesscontrol: {
-      sql: `${CUBE}."accessControl"`,
-      type: `string`
-    },
-    description: {
-      sql: `description`,
-      type: `string`
+      type: `string`,
     },
     userid: {
       sql: `${CUBE}."userId"`,
-      type: `string`
-    },
-    title: {
-      sql: `title`,
-      type: `string`
-    },
+      type: `string`,
+    },    
     assistantid: {
       sql: `${CUBE}."assistantId"`,
-      type: `string`
-    },
-    metadata: {
-      sql: `metadata`,
-      type: `string`
-    },
-    externalid: {
-      sql: `${CUBE}."externalId"`,
-      type: `string`
+      type: `string`,
     },
     createdat: {
       sql: `${CUBE}."createdAt"`,
-      type: `time`
+      type: `time`,
     },
     updatedat: {
       sql: `${CUBE}."updatedAt"`,
-      type: `time`
+      type: `time`,
     },
     archivedat: {
       sql: `${CUBE}."archivedAt"`,
-      type: `time`
+      type: `time`,
     },
     deletedat: {
       sql: `${CUBE}."deletedAt"`,
-      type: `time`
-    }
+      type: `time`,
+    },
   },
   measures: {
     count: {
-      type: `count`
-    }
+      type: `count`,
+    },
   },
   pre_aggregations: {
     // Pre-aggregation definitions go here.
@@ -76,14 +48,14 @@ cube(`kb_threads`, {
   },
   preAggregations: {
     main: {
-      measures: [kb_threads.count]
+      measures: [kb_threads.count],
     },
     thread_count_rollup: {
       measures: [kb_threads.count],
       dimensions: [kb_threads.id],
       refreshKey: {
-        every: `1 hour`
-      }
-    }
-  }
+        every: `1 hour`,
+      },
+    },
+  },
 });
