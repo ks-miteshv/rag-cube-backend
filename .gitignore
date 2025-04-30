@@ -1,0 +1,23 @@
+# Node.js dependencies
+node_modules/
+
+# Cube Store data (local storage, should not be versioned)
+.cubestore/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+
+# Cube model cache (if any)
+model/.cache/

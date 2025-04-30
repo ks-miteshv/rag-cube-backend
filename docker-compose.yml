@@ -1,0 +1,11 @@
+services:
+  cube:
+    image: cubejs/cube:latest
+    network_mode: host    
+    ports:
+      - 4000:4000
+      - 15432:15432
+    env_file:
+      - .env
+    volumes:
+      - .:/cube/conf
