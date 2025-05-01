@@ -15,7 +15,7 @@ cube(`kb_threads`, {
     userid: {
       sql: `${CUBE}."userId"`,
       type: `string`,
-    },    
+    },
     assistantid: {
       sql: `${CUBE}."assistantId"`,
       type: `string`,
@@ -49,13 +49,6 @@ cube(`kb_threads`, {
   preAggregations: {
     main: {
       measures: [kb_threads.count],
-    },
-    thread_count_rollup: {
-      measures: [kb_threads.count],
-      dimensions: [kb_threads.id],
-      refreshKey: {
-        every: `1 hour`,
-      },
     },
   },
 });
