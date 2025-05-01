@@ -1,14 +1,14 @@
 cube(`kb_threads`, {
   sql_table: `public.kb_threads`,
   data_source: `default`,
-  
+
   joins: {
     kb_messages: {
       relationship: `hasMany`,
-      sql: `${CUBE}.id = ${kb_messages}.threadId`
-    }
+      sql: `${CUBE}.id = ${kb_messages}.threadId`,
+    },
   },
-  
+
   dimensions: {
     id: {
       sql: `id`,
@@ -42,9 +42,9 @@ cube(`kb_threads`, {
     deletedat: {
       sql: `${CUBE}."deletedAt"`,
       type: `time`,
-    }
+    },
   },
-  
+
   measures: {
     count: {
       type: `count`,
@@ -59,9 +59,9 @@ cube(`kb_threads`, {
         WHERE m."threadId" = ${CUBE}.id
       )`,
       title: `First Message Time`,
-      description: `Time of the first message in thread`
+      description: `Time of the first message in thread`,
     },
-    
+
     lastMessageTime: {
       type: `max`,
       sql: `(
@@ -70,9 +70,9 @@ cube(`kb_threads`, {
         WHERE m."threadId" = ${CUBE}.id
       )`,
       title: `Last Message Time`,
-      description: `Time of the last message in thread`
+      description: `Time of the last message in thread`,
     },
-    
+
     // Thread duration in seconds
     threadDurationSeconds: {
       type: `number`,
@@ -82,18 +82,18 @@ cube(`kb_threads`, {
         ))
       `,
       title: `Thread Duration (sec)`,
-      description: `Duration of thread in seconds`
+      description: `Duration of thread in seconds`,
     },
-    
+
     // Thread duration in minutes
     threadDurationMinutes: {
       type: `number`,
       sql: `${threadDurationSeconds} / 60.0`,
       title: `Thread Duration (min)`,
       format: `number`,
-      description: `Duration of thread in minutes`
+      description: `Duration of thread in minutes`,
     },
-    
+
     // Average thread duration in seconds
     avgThreadDurationSeconds: {
       type: `avg`,
@@ -111,30 +111,30 @@ cube(`kb_threads`, {
         ))
       `,
       title: `Average Thread Duration (sec)`,
-      description: `Average duration of threads in seconds`
+      description: `Average duration of threads in seconds`,
     },
-    
+
     // Average thread duration in minutes
     avgThreadDurationMinutes: {
       type: `number`,
       sql: `${avgThreadDurationSeconds} / 60.0`,
       title: `Average Thread Duration (min)`,
       format: `number`,
-      description: `Average duration of threads in minutes`
-    }
+      description: `Average duration of threads in minutes`,
+    },
   },
-  
+
   pre_aggregations: {
     // Pre-aggregation for thread duration metrics
     threadDurationRollup: {
       measures: [count, avgThreadDurationSeconds, avgThreadDurationMinutes],
       dimensions: [assistantid, organizationid],
       timeDimension: createdat,
-      granularity: 'day',
-      partitionGranularity: 'month',
+      granularity: "day",
+      partitionGranularity: "month",
       refreshKey: {
-        every: '6 hours',
-      }
-    }
-  }
+        every: "6 hours",
+      },
+    },
+  },
 });

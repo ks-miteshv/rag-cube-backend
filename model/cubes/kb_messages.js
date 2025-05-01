@@ -5,7 +5,7 @@ cube(`kb_messages`, {
 
   joins: {
     kb_threads: {
-      sql: `${CUBE}.thread_id = ${kb_threads}.id`, // adjust column names as needed
+      sql: `${CUBE}."threadId" = ${kb_threads}."id"`,
       relationship: `belongsTo`,
     },
   },
@@ -77,6 +77,12 @@ cube(`kb_messages`, {
     count: {
       type: `count`,
       description: "Total number of messages (prompts)",
+    },
+    countMessagesByThread: {
+      type: `count`,
+      sql: `(SELECT count(km.*), kt."assistantId" FROM kb_messages km LEFT JOIN kb_threads kt ON kt.id = km."threadId" GROUP BY kt."assistantId" )`,
+      title: `Count by Assistant`,
+      description: `Total number of messages (prompts) by assistant`,
     },
     avgPromptsPerThread: {
       type: `number`,
