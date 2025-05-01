@@ -1,7 +1,11 @@
 module.exports = {
   queryRewrite: (query, { securityContext }) => {
     // List of cubes you want to filter by organizationId
-    const cubesToFilter = ["kb_threads", "kb_messages"];
+    const cubesToFilter = [
+      "kb_threads",
+      "kb_messages",
+      "thread_message_analytics",
+    ];
 
     // Helper function to extract cube names from query
     const getCubesFromQuery = (query) => {

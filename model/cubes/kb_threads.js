@@ -49,7 +49,7 @@ cube(`kb_threads`, {
     count: {
       type: `count`,
     },
-    
+
     // New approach that doesn't rely on complex filtering
     firstMessageTime: {
       type: `min`,
@@ -124,17 +124,5 @@ cube(`kb_threads`, {
     },
   },
 
-  pre_aggregations: {
-    // Pre-aggregation for thread duration metrics
-    threadDurationRollup: {
-      measures: [count, avgThreadDurationSeconds, avgThreadDurationMinutes],
-      dimensions: [assistantid, organizationid],
-      timeDimension: createdat,
-      granularity: "day",
-      partitionGranularity: "month",
-      refreshKey: {
-        every: "6 hours",
-      },
-    },
-  },
+  pre_aggregations: {},
 });

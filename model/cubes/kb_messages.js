@@ -78,43 +78,6 @@ cube(`kb_messages`, {
       type: `count`,
       description: "Total number of messages (prompts)",
     },
-    countMessagesByThread: {
-      type: `count`,
-      sql: `(SELECT count(km.*), kt."assistantId" FROM kb_messages km LEFT JOIN kb_threads kt ON kt.id = km."threadId" GROUP BY kt."assistantId" )`,
-      title: `Count by Assistant`,
-      description: `Total number of messages (prompts) by assistant`,
-    },
-    avgPromptsPerThread: {
-      type: `number`,
-      sql: `COUNT(*) * 1.0 / (SELECT COUNT(DISTINCT id) FROM public.kb_threads)`,
-      format: "number",
-      title: "Avg. Prompts per Thread",
-    },
-    avgTimeChattingAcrossThreads: {
-      type: "number",
-      sql: `
-        (
-          SELECT AVG(thread_duration)
-          FROM (
-            SELECT
-              EXTRACT(EPOCH FROM MAX("createdAt") - MIN("createdAt")) / 60.0 AS thread_duration
-            FROM public.kb_messages
-            GROUP BY "threadId"
-            HAVING COUNT(*) > 1
-          ) t
-        )
-      `,
-      title: "Avg. Time Chatting (All Threads)",
-      format: "number",
-    },
-    timeChatting: {
-      type: "number",
-      sql: `
-        EXTRACT(EPOCH FROM MAX("createdAt") - MIN("createdAt")) / 60.0
-      `,
-      title: "Time Chatting (min)",
-      format: "number",
-    },
   },
 
   pre_aggregations: {
